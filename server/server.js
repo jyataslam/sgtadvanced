@@ -14,6 +14,9 @@ const server = express();
 server.use(express.static(__dirname + '/html'));
 server.use(express.urlencoded({ extended: false })); //have express pull body data that is urlencoded and place it into an object called body
 
+//when using AXIOS use this instead...
+//server.get(espress.json());
+
 //make endpoint to get all the files (pathway, callback)
 //when a connection has been made at port 3001 at line14's url, call this function
 server.get('/api/grades', (req, res)=>{
@@ -44,7 +47,38 @@ server.get('/api/grades', (req, res)=>{
     })
 })
 
+// INSERT INTO `grades` SET `surname`="Yata", `givenname`="Jason", `course`="math", `grade`=88, `added`=NOW()
+//or use this to insert multiple values...
+// INSERT INTO `grades` (`surname`, `givenname`, `course`, `grade`) VALUES ("Yata","Jason","math",88)
+
 server.post('/api/grades', (req, res)=>{
+    //check the body object and see if any data was not sent
+    if (req.body.name === undefined || req.body.course === undefined || req.body.grade === undefined){
+        //respond to the client with an appropriate error message
+        res.send({
+            success: false,
+            error: 'invalid name, course, or grade'
+        });
+        return
+    }
+    //
+    db.connect(()=>{
+        const name = req.body.name.split(" ");
+        const query = 'INSERT INTO `grades` SET `surname`="'+name.slice(1).join(' ')+'", `givenname`="'+name[0]+'", `course`="'+req.body.course+'", `grade`='+req.body.grade+', `added`=NOW()';
+        db.query(query, (error, results)=>{
+            if(!error){
+                res.send({
+                    success: true,
+                    new_id: results.insertId
+                })
+            } else {
+                res.send({
+                    success: false,
+                    error
+                })
+            }
+        })
+    })
 
 })
 
