@@ -1,6 +1,11 @@
 
-//load the express library into the file
+//load the express and sql library into the file
 const express = require('express');
+const mysql = require('mysql');
+const mysqlcredentials = require('./mysqlcreds.js');
+
+//use what's inside mysqlcreds when its needed
+const db = mysql.createConnection(mysqlcredentials);
 
 //create a server 
 const server = express();
