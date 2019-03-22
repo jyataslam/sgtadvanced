@@ -220,9 +220,9 @@ class SGT_template{
 
 	getDataFromServer(){
 		$.ajax({	
-			url: 'http://s-apis.learningfuze.com/sgt/get',
+			url: 'api/grades',
 			dataType: 'json',
-			method: 'post',
+			method: 'get',
 			data: {'api_key': 'FDTbESioTh'},
 			success: function(response){
 				for (var index in response.data){

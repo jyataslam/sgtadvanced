@@ -5,34 +5,35 @@ const express = require('express');
 //create a server 
 const server = express();
 
-//.use is middleware
+//if you get a request for that path and it's available in the html folder, serve it. (__dirname means wherever your file is)
 server.use(express.static(__dirname + '/html'));
 
-
-var insults = [
-    'your father smelt of elderberries',
-    'you program on an altaire',
-    'I bet you still use var',
-    'one line functions are for chumps',
-    'david smells',
-    'i love my chair'
-];
-
-//return a random insult
-server.get('/insult', (request, response)=>{
-    response.send(insults[Math.floor(Math.random()*insults.length)]);
-})
-
-//tell server what function to listen for. Params (the path to listen for, the callback fcn to call once that path has been received)
-server.get('/', function(request, response){
-    //an object representing all the data coming from the client to the server
-    //an object representing all of the data going from the server to the client
-    response.send('Hello, World.');
-})
-
-server.get('/time', (request, response)=>{
-    var now = new Date();
-    response.send(now.toLocaleDateString());
+//make endpoint to get all the files (pathway, callback fcn)
+server.get('/api/grades', (req, res)=>{
+    res.send(`{
+        "success": true,
+        "data": [{
+            "id": 1,
+            "name": "Jason Yata",
+            "course": "Math",
+            "grade": 80
+        }, {
+            "id": 2,
+            "name": "Ken Li",
+            "course": "PokemonGo",
+            "grade": 100
+        }, {
+            "id": 3,
+            "name": "Quan Le",
+            "course": "Kanye",
+            "grade": 10
+        }, {
+            "id": 4,
+            "name": "Andrew Ly",
+            "course": "Photography",
+            "grade": 50
+        }]
+    }`)
 })
 
 //server you have to listen for a connection. where you wanna set up(port) and what function to call when it's done (callback)
