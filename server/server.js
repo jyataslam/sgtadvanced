@@ -23,8 +23,6 @@ server.get('/insult', (request, response)=>{
     response.send(insults[Math.floor(Math.random()*insults.length)]);
 })
 
-
-
 //tell server what function to listen for. Params (the path to listen for, the callback fcn to call once that path has been received)
 server.get('/', function(request, response){
     //an object representing all the data coming from the client to the server
@@ -36,10 +34,6 @@ server.get('/time', (request, response)=>{
     var now = new Date();
     response.send(now.toLocaleDateString());
 })
-
-
-
-
 
 //server you have to listen for a connection. where you wanna set up(port) and what function to call when it's done (callback)
 server.listen(3001, ()=>{
