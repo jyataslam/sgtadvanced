@@ -7,3 +7,5 @@ var list = {
         {id: 4, name: 'Andrew Ly', course: 'Photography', grade: 50}
     ]
 }
+
+SELECT `id`, CONCAT(`givenname`," ", `surname`), AS `name`, `course`, `grade`, FROM `grades`
